@@ -1,0 +1,105 @@
+---
+title: Will Adrian Martinez Satisfy K-State Fans?
+author: Natalie Frick
+date: '2022-04-06'
+slug: will-adrian-martinez-satisfy-k-state-fans
+categories: []
+tags: []
+---
+```{r warning=FALSE, message=FALSE, echo=FALSE}
+library(tidyverse)
+library(ggalt)
+library(scales)
+library(waffle)
+```
+After spending four years at the University of Nebraska-Lincoln, quarterback Adrian Martinez decided to enter the transfer portal and continue his athletic career at Kansas State University. 
+
+Skylar Thompson, the QB for K-State since 2017, created quite the fan base among Wildcat fans during his five seasons. Thompson's last year of eligibility with Kansas State was 2021. 
+
+Now, Nebraska and Kansas State fans are curious about how the two quarterbacks will compare and where Martinez will land measured next to other Big 12 quarterbacks. 
+```{r warning=FALSE, message=FALSE, echo=FALSE}
+adrian <- read_csv("adrianmartinez.csv")
+skylar <- read_csv("skylarthompson.csv")
+skylar2021 <- skylar %>% filter(Year == "2021")
+adrian2021 <- adrian %>% filter(Year == "2021")
+big12QB2021 <- read_csv("Big12QBs.csv")
+```
+```{r warning=FALSE, message=FALSE, echo=FALSE}
+alldata <- bind_rows(big12QB2021, adrian2021, skylar2021)
+```
+```{r warning=FALSE, message=FALSE, echo=FALSE}
+ggplot() + 
+  geom_bar(data=alldata, aes(x=reorder(School, `PassingTD`), weight=`PassingTD`)) +
+  scale_y_continuous(labels=comma) +
+  coord_flip() +
+  labs(title="Martinez and Thompson are Extremely Comparable", subtitle="According to thier 2021 seasons passing touchdowns, they come out right next to each other." , x="School", y="Passing TD's", caption="Source: Sports-Reference.com | By Natalie Frick") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 16, face = "bold"),
+    axis.title = element_text(size = 10), 
+    plot.subtitle = element_text(size=10), 
+    panel.grid.minor = element_blank()
+    )
+```
+```{r warning=FALSE, message=FALSE, echo=FALSE}
+big12allyears <- read_csv("Big12AllYears.csv")
+big10allyears <- read_csv("Big10AllYears.csv")
+big102021 <- big10allyears %>% filter(Year == "2021")
+```
+TEXT HERE
+```{r warning=FALSE, message=FALSE, echo=FALSE}
+ggplot() + 
+  geom_point(data=big12QB2021, aes(x=PassingAtt, y=PassingYds), color="grey") +
+  geom_point(data=big102021, aes(x=PassingAtt, y=PassingYds), color="grey") +
+  geom_point(data=skylar2021, aes(x=PassingAtt, y=PassingYds), color="purple") + 
+  geom_point(data=adrian2021, aes(x=PassingAtt, y=PassingYds), color="red") +
+  geom_text(data=skylar2021, aes(x=PassingAtt-.03, y=PassingYds+4, label = School)) +
+  geom_text(data=adrian2021, aes(x=PassingAtt-.03, y=PassingYds+4, label = School)) +
+  labs(title="Two Quarterbacks in the Midwest, Who are Extremly Mid", subtitle="Martinez and Thompson fall right next to each other again - right in the middle of the pack." , x="Passing Yards", y="Passing Attempts",caption="Source: Sports-Reference.com | By Natalie Frick") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 16, face = "bold"),
+    axis.title = element_text(size = 10), 
+    plot.subtitle = element_text(size=10), 
+    panel.grid.minor = element_blank()
+    )
+```
+TEXT HERE 
+
+```{r warning=FALSE, message=FALSE, echo=FALSE}
+adriangamelogs2021 <- read_csv("adrianmartinez2021season.csv")
+skylargamelogs2021 <- read_csv("skylarthompson2021season.csv")
+oklahomastate <- read_csv("OklahomaState2021.csv")
+baylor <- read_csv("baylor2021.csv")
+oklahoma <- read_csv("oklahoma2021.csv")
+iowastate <- read_csv("IowaState2021.csv")
+westvirginia <- read_csv("WestVirginia2021.csv")
+texastech <- read_csv("TexasTech2021.csv")
+texas2021 <- read_csv("Texas2021.csv")
+tcu2021 <- read_csv("TCU2021.csv")
+kansas2021 <- read_csv("Kansas2021.csv")
+```
+```{r warning=FALSE, message=FALSE, echo=FALSE}
+ggplot() + 
+  
+  geom_step(data=oklahomastate, aes(x=Date, y=PassingAtt, group=School), color="grey") +
+  geom_step(data=baylor, aes(x=Date, y=PassingAtt, group=School), color="grey") +
+  geom_step(data=oklahoma, aes(x=Date, y=PassingAtt, group=School), color="grey") +
+  geom_step(data=iowastate, aes(x=Date, y=PassingAtt, group=School), color="grey") +
+  geom_step(data=westvirginia, aes(x=Date, y=PassingAtt, group=School), color="grey") +
+  geom_step(data=texastech, aes(x=Date, y=PassingAtt, group=School), color="grey") +
+  geom_step(data=texas2021, aes(x=Date, y=PassingAtt, group=School), color="grey") +
+  geom_step(data=tcu2021, aes(x=Date, y=PassingAtt, group=School), color="grey") +
+  geom_step(data=kansas2021, aes(x=Date, y=PassingAtt, group=School), color="grey") +
+  geom_step(data=skylargamelogs2021, aes(x=Date, y=PassingAtt, group=School), color="purple") + 
+  geom_step(data=adriangamelogs2021, aes(x=Date, y=PassingAtt, group=School), color="red") +
+  labs(title="Martinez is More Consistant", subtitle="When it comes to passing attempts per game, Martinez is more reliable." , x="Games", y="Passing Attempts",caption="Source: Sports-Reference.com | By Natalie Frick") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 16, face = "bold"),
+    axis.title = element_text(size = 10), 
+    plot.subtitle = element_text(size=10), 
+    panel.grid.minor = element_blank()
+    )
+```
+
